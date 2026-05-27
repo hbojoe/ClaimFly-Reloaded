@@ -22,6 +22,10 @@ class FlightCheck {
         retrieveMessages();
     }
     String check(Player player) {
+        if (hasNaturalFlight(player)) {
+            return FLIGHT_ALLOWED;
+        }
+
         Claim claim = claims.getClaim(player);
 
         if (!player.hasPermission("claimfly.use")) {

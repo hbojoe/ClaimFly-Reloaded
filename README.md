@@ -1,6 +1,6 @@
 # ClaimFly Reloaded
 
-ClaimFly Reloaded lets players fly inside GriefPrevention claims while keeping flight restricted everywhere else. It is built for servers that want claim-based utility flight without allowing global creative-style flight.
+ClaimFly Reloaded lets players fly inside GriefPrevention claims while keeping survival and adventure flight restricted everywhere else. It is built for servers that want claim-based utility flight without blocking normal creative or spectator flight.
 
 ## Features
 
@@ -8,6 +8,7 @@ ClaimFly Reloaded lets players fly inside GriefPrevention claims while keeping f
 - Flight in owned claims
 - Optional flight in other players' claims when the player has both ClaimFly permission and GriefPrevention access trust
 - Optional flight in admin claims for staff
+- Creative and spectator mode bypass
 - Automatic flight removal when a player leaves an allowed claim
 - Claim boundary particles while flying
 - Configurable messages, check interval, boundary distance, and storage backend
@@ -43,6 +44,7 @@ Running the command toggles ClaimFly flight on or off. Flight only stays active 
 | Another player's claim without access trust | No |
 | Unclaimed land | No |
 | Admin claim | Yes, only with `claimfly.claims.admin` |
+| Creative or spectator mode | Yes, standard Minecraft flight bypasses ClaimFly restrictions |
 
 For another player to fly in your claim, give them GriefPrevention access trust and make sure your server owner has granted them `claimfly.claims.others`.
 
@@ -139,6 +141,8 @@ message:
 ## Important Behavior
 
 ClaimFly removes managed flight when a player leaves an allowed claim. This prevents players from keeping `allowFlight` outside claims and keeps normal survival fall damage behavior intact.
+
+Creative and spectator players bypass ClaimFly restrictions. This keeps standard Minecraft creative/spectator flight working even outside claims.
 
 ClaimFly does not grant flight in unclaimed land.
 

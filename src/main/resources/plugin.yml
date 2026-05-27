@@ -1,5 +1,5 @@
 main: org.makershaven.claimfly.ClaimFly
-api-version: "1.18"
+api-version: "1.21.11"
 version: "${project.version}"
 name: "ClaimFly"
 author: "Weaves"
@@ -21,7 +21,6 @@ permissions:
       claimfly.command: true
       claimfly.claims.others: true
       claimfly.claims.admin: true
-      claimfly.claims.unclaimed: true
   claimfly.use:
     description: Allows flight in your own claim.
     default: false
@@ -44,6 +43,3 @@ permissions:
     default: false
     children:
       claimfly.command: true
-  claimfly.claims.unclaimed:
-    description: Allows you to fly in unclaimed land.
-    default: false

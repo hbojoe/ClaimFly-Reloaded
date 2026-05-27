@@ -6,15 +6,15 @@
 
     <groupId>org.makershaven</groupId>
     <artifactId>ClaimFly</artifactId>
-    <version>1.3.0</version>
+    <version>1.3.1</version>
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.release>21</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <repositories>
         <repository>
-            <id>spigot-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+            <id>papermc</id>
+            <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
         <repository>
             <id>jitpack.io</id>
@@ -26,23 +26,22 @@
         </repository>
     </repositories>
     <dependencies>
-        <!--Spigot API-->
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.18-R0.1-SNAPSHOT</version>
+            <groupId>io.papermc.paper</groupId>
+            <artifactId>paper-api</artifactId>
+            <version>1.21.11-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.jetbrains</groupId>
-            <artifactId>annotations-java5</artifactId>
-            <version>RELEASE</version>
+            <artifactId>annotations</artifactId>
+            <version>24.1.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.TechFortress</groupId>
+            <groupId>com.github.GriefPrevention</groupId>
             <artifactId>GriefPrevention</artifactId>
-            <version>16.9</version>
+            <version>16.18.7</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -54,7 +53,7 @@
         <dependency>
             <groupId>org.bstats</groupId>
             <artifactId>bstats-bukkit</artifactId>
-            <version>1.7</version>
+            <version>3.1.0</version>
             <scope>compile</scope>
         </dependency>
 
@@ -62,6 +61,14 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <release>${maven.compiler.release}</release>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -77,12 +84,13 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.6.0</version>
                 <configuration>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
                     <relocations>
                         <relocation>
-                            <pattern>org.bstats.bukkit</pattern>
-                            <shadedPattern>org.makershaven.claimfly</shadedPattern>
+                            <pattern>org.bstats</pattern>
+                            <shadedPattern>org.makershaven.claimfly.bstats</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>

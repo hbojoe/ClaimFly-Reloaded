@@ -8,14 +8,10 @@ import org.bukkit.entity.Player;
 
 //X East[+] West[-] // Z North[-] South[+]
 class FlightBoundary {
-    private int checkDistance;
-    private Player player;
-    private Claim claimAtPlayer;
-    private Claims claims;
-    private Location playerLoc;
-    private ClaimFly plugin;
-    private Particle particle = Particle.REDSTONE;
-    Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(255, 0, 0), 10.0F);
+    private final Claims claims;
+    private final ClaimFly plugin;
+    private final Particle particle = Particle.DUST;
+    private final Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(255, 0, 0), 10.0F);
 
     FlightBoundary(ClaimFly plugin){
         this.claims = new Claims();
@@ -42,7 +38,7 @@ class FlightBoundary {
             for(int i =0; i <= 3;i++){
                 if(playerLoc.distance(locs[i]) <= checkDistance){
                     player.spawnParticle(particle,locs[i],1,dustOptions);
-                    player.spawnParticle(particle,locs[i].subtract(0,1,0),1,dustOptions);
+                    player.spawnParticle(particle,locs[i].clone().subtract(0,1,0),1,dustOptions);
                 }
             }
 

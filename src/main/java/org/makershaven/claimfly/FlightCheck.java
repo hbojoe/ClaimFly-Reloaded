@@ -1,5 +1,6 @@
 package org.makershaven.claimfly;
 
+import me.ryanhamshire.GriefPrevention.Claim;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -20,37 +21,32 @@ class FlightCheck {
         retrieveMessages();
     }
     String check(Player player) {
+        Claim claim = claims.getClaim(player);
+
         if (!player.hasPermission("claimfly.use")) {
             return noFlyOnServer;
         }
 
-        if (claims.isInAdminClaim(player)) {
-            if (claims.hasAccessTrust(player)) {
+        if (claim == null) {
+            return noFlyOutsideClaims;
+        }
+
+        if (claims.isAdminClaim(claim)) {
+            if (player.hasPermission("claimfly.claims.admin")) {
                 flightBoundary.showFlightBoundaries(player);
                 return FLIGHT_ALLOWED;
             }
-            else if (!player.hasPermission("claimfly.claims.admin")) {
-                return noFlyThisClaim.replace("%ClaimOwner%", claims.getClaim(player).getOwnerName());
-            }
 
+            return noFlyThisClaim.replace("%ClaimOwner%", claims.getOwnerName(claim));
         }
-        else if (claims.isInClaim(player)) {
-            if (!(claims.isClaimOwner(player) || claims.hasAccessTrust(player) || player.hasPermission("claimfly.claims.others"))) {
 
-                return noFlyThisClaim.replace("%ClaimOwner%", claims.getClaim(player).getOwnerName());
-            }
-            else {
-                flightBoundary.showFlightBoundaries(player);
-            }
-
+        if (claims.isClaimOwner(player, claim)
+                || (player.hasPermission("claimfly.claims.others") && claims.hasAccessTrust(player, claim))) {
+            flightBoundary.showFlightBoundaries(player);
+            return FLIGHT_ALLOWED;
         }
-        else if (!claims.isInClaim(player)) {
-            if (!player.hasPermission("claimfly.claims.unclaimed")) {
 
-                return noFlyOutsideClaims;
-            }
-        }
-        return FLIGHT_ALLOWED;
+        return noFlyThisClaim.replace("%ClaimOwner%", claims.getOwnerName(claim));
     }
 
     private void retrieveMessages() {

@@ -37,6 +37,7 @@ public class Commands implements CommandExecutor, TabCompleter {
                                     {
                                         plugin.getConfig().set("check-interval", Integer.parseInt(args[1]));
                                         plugin.saveConfig();
+                                        plugin.config = plugin.getConfig();
                                         plugin.checkFlyingPlayersTask.cancel();
                                         plugin.startCheckTask(plugin, 20, plugin.config.getInt("check-interval"));
                                         player.sendMessage(ChatColor.GREEN + "CheckInterval set to " + args[1]);
@@ -62,7 +63,7 @@ public class Commands implements CommandExecutor, TabCompleter {
 
                         if (player.hasPermission("claimfly.commands.admin")) {
                             plugin.reloadConfig();
-                            plugin.saveConfig();
+                            plugin.config = plugin.getConfig();
                             plugin.checkFlyingPlayersTask.cancel();
                             plugin.startCheckTask(plugin, 20, plugin.config.getInt("check-interval"));
                             player.sendMessage(ChatColor.GREEN + "ClaimFly config reloaded!");

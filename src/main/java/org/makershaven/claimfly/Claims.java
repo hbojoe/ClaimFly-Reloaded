@@ -1,6 +1,7 @@
 package org.makershaven.claimfly;
 
 import me.ryanhamshire.GriefPrevention.Claim;
+import me.ryanhamshire.GriefPrevention.ClaimPermission;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -15,27 +16,20 @@ class Claims {
         return GriefPrevention.instance.dataStore.getClaimAt(location, true, null);
     }
 
-    boolean hasAccessTrust(Player player) {
-
-        /*This is kinda odd but GP allowAccess returns null when a player has
-        trust and a string when they do not*/
-        String string = getClaim(player).allowAccess(player);
-        return string == null;
-    }
-
-    boolean hasAccessTrust(Player player,Location location){
-        String string = getClaim(location).allowAccess(player);
-        return string ==null;
+    boolean hasAccessTrust(Player player, Claim claim) {
+        return claim != null && claim.checkPermission(player, ClaimPermission.Access, null) == null;
     }
 
     boolean isClaimOwner(Player player) {
+        return isClaimOwner(player, getClaim(player));
+    }
 
-        return player.getName().equals(getClaim(player).getOwnerName());
+    boolean isClaimOwner(Player player, Claim claim) {
+        return claim != null && player.getUniqueId().equals(claim.getOwnerID());
     }
 
     boolean isClaimOwner(Player player,Location location){
-
-        return player.getName().equals(getClaim(location).getOwnerName());
+        return isClaimOwner(player, getClaim(location));
     }
 
     boolean isInClaim(Player player) {
@@ -49,18 +43,20 @@ class Claims {
     }
 
     boolean isInAdminClaim(Player player) {
-
-        if (getClaim(player) != null) {
-
-            return getClaim(player).isAdminClaim();
-        }
-        else
-            return false;
+        return isAdminClaim(getClaim(player));
 
     }
 
+    boolean isAdminClaim(Claim claim) {
+        return claim != null && claim.isAdminClaim();
+    }
+
     boolean isAnAdminClaim(Location location){
-        return getClaim(location).isAdminClaim();
+        return isAdminClaim(getClaim(location));
+    }
+
+    String getOwnerName(Claim claim) {
+        return claim != null ? claim.getOwnerName() : "Unknown";
     }
 
 }

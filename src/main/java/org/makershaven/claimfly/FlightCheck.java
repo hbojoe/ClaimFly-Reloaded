@@ -1,6 +1,7 @@
 package org.makershaven.claimfly;
 
 import me.ryanhamshire.GriefPrevention.Claim;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -58,6 +59,20 @@ class FlightCheck {
 
     String getFLIGHT_ALLOWED() {
         return FLIGHT_ALLOWED;
+    }
+
+    static void disableManagedFlight(Player player) {
+        if (player.isFlying()) {
+            player.setFlying(false);
+        }
+
+        if (!hasNaturalFlight(player)) {
+            player.setAllowFlight(false);
+        }
+    }
+
+    static boolean hasNaturalFlight(Player player) {
+        return player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR;
     }
 
 

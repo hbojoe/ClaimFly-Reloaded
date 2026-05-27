@@ -15,10 +15,12 @@ public class Commands implements CommandExecutor, TabCompleter {
 
     private ClaimFly plugin;
     private PlayerTracker playerTracker;
+    private FlightCheck flightCheck;
 
     Commands(ClaimFly plugin) {
         this.plugin = plugin;
         this.playerTracker = plugin.playerTracker;
+        this.flightCheck = new FlightCheck(plugin);
     }
 
     @Override
@@ -122,6 +124,12 @@ public class Commands implements CommandExecutor, TabCompleter {
             else if (player.hasPermission("claimfly.command")) {
 
                 if (!player.getAllowFlight()) {
+                    String checkResult = flightCheck.check(player);
+                    if (!checkResult.equals(flightCheck.getFLIGHT_ALLOWED())) {
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', checkResult));
+                        return true;
+                    }
+
                     player.setAllowFlight(true);
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',
                             plugin.getConfig().getString("message.flight-toggle-on")));
@@ -129,7 +137,7 @@ public class Commands implements CommandExecutor, TabCompleter {
 
                 }
                 else {
-                    player.setAllowFlight(false);
+                    FlightCheck.disableManagedFlight(player);
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',
                             plugin.getConfig().getString("message.flight-toggle-off")));
                 }

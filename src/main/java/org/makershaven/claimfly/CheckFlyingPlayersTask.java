@@ -24,10 +24,10 @@ public class CheckFlyingPlayersTask extends BukkitRunnable {
     private void checkFlyingPlayers() {
         String checkResult;
         for (Player player : playerTracker.getTrackedPlayersSet()) {
-            if (player.isFlying()) {
+            if (!FlightCheck.hasNaturalFlight(player) && (player.getAllowFlight() || player.isFlying())) {
                 checkResult = flightCheck.check(player);
                 if (!checkResult.equals(flightCheck.getFLIGHT_ALLOWED())) {
-                    player.setFlying(false);
+                    FlightCheck.disableManagedFlight(player);
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', checkResult));
                 }
             }

@@ -39,11 +39,11 @@ public class FlightToggleListener implements Listener {
                 if ((System.currentTimeMillis() - aviator.getFlightToggleTimeStamp()) <= toggleCooldown) {
                     event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',
                             plugin.getConfig().getString("message.dont-spam-space")));
-                    event.getPlayer().setAllowFlight(false);
                 }
                 else {
                     event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', checkResult));
                 }
+                FlightCheck.disableManagedFlight(player);
                 aviator.setFlightToggleTimeStamp();
                 event.setCancelled(true);
             }

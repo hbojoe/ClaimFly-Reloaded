@@ -1,5 +1,5 @@
 main: org.makershaven.claimfly.ClaimFly
-api-version: "1.21.11"
+api-version: "${claimfly.apiVersion}"
 version: "${project.version}"
 name: "ClaimFly"
 author: "Weaves"

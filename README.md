@@ -17,12 +17,19 @@ ClaimFly Reloaded lets players fly inside GriefPrevention claims while keeping s
 
 ## Requirements
 
-- Minecraft/Paper `1.21.11`
-- Java `21`
 - GriefPrevention
 - Vault
 
 Install GriefPrevention and Vault before installing ClaimFly. ClaimFly declares both as required dependencies.
+
+### Supported Server Versions
+
+| Server version | Java | Use this jar |
+| --- | --- | --- |
+| Paper `1.21.11` | Java `21` or newer | `ClaimFly-<version>-mc-1.21.11.jar` |
+| Paper `26.1`, `26.1.1`, or `26.1.2` | Java `25` or newer | `ClaimFly-<version>-mc-26.1.jar` |
+
+The `mc-26.1` jar is packaged for the Paper `26.1.x` patch line, including `26.1`, `26.1.1`, and `26.1.2`.
 
 ## Player Guide
 
@@ -77,7 +84,7 @@ For another player to fly in your claim, give them GriefPrevention access trust 
 
 1. Install GriefPrevention.
 2. Install Vault.
-3. Place the ClaimFly jar in your server's `plugins` folder.
+3. Place the correct ClaimFly jar for your server version in your server's `plugins` folder.
 4. Start or restart the server.
 5. Edit `plugins/ClaimFly/config.yml` if needed.
 6. Grant permissions with your permissions plugin.
@@ -159,10 +166,17 @@ GriefPrevention access trust
 mvn package
 ```
 
-The compiled jar will be created in:
+The build creates two server-version jars in:
 
 ```text
 target/
+```
+
+Use:
+
+```text
+ClaimFly-<version>-mc-1.21.11.jar
+ClaimFly-<version>-mc-26.1.jar
 ```
 
 ## License
